@@ -34,6 +34,8 @@ gem 'jwt'
 gem 'rexml'
 # Load environment variables from env file
 gem 'dotenv-rails', groups: %i[development test]
+# Active model serializer
+gem 'active_model_serializers'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
