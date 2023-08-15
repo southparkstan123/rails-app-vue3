@@ -31,7 +31,9 @@ This is an experimental SPA using Vite Ruby(include Ruby on Rails 7) with Vue 3,
 
 **TailwindCSS 3.3.3** is used on this repo
 
-## Configurations
+## Others
+
+**Pinia** and **Vue-router 4** are used on this repo
 
 ### Clone the repo to your local machine
 
