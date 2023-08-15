@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+publisher_A:
+  name: 'Publisher A'
+  description: 'The description for publisher A'
+  creator: :admin
+  updater: admin
+
+publisher_B:
+  name: 'Publisher B'
+  description: 'The description for publisher B'
+  creator: test_user
+  updater: test_user

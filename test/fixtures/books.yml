@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+book_A:
+  name: 'Book A'
+  abstract: 'The description for book A'
+  price: 30.0
+  creator: admin
+  updater: admin
+  publisher: publisher_A
+
+book_B:
+  name: 'Book B'
+  abstract: 'The description for book B'
+  price: 20.0
+  creator: admin
+  updater: admin
+  publisher: publisher_B
+
+book_C:
+  name: 'Book C'
+  abstract: 'The description for book C'
+  price: 15.0
+  creator: admin
+  updater: admin
+  publisher: publisher_B
+  
+book_D:
+  name: 'Book D'
+  abstract: 'The description for book D'
+  price: 12.0
+  creator: test_user
+  updater: test_user
+  publisher: publisher_A

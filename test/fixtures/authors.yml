@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+author_A:
+  name: 'Author A'
+  description: 'The description for author A'
+  creator: admin
+  updater: admin
+  books: book_B, book_C, book_D
+
+author_B:
+  name: 'Author B'
+  description: 'The description for author B'
+  creator: test_user
+  updater: test_user
+  books: book_A, book_B, book_D
