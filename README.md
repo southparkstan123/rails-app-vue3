@@ -13,13 +13,17 @@ This is an experimental SPA using Vite Ruby(include Ruby on Rails 7) with Vue 3,
 
 ### Backend
 
+#### Database
+
+**PostgreSQL 15** is used on this repo
+
 #### Ruby
 
-**Ruby 3.0.0** is used on this repo
+**Ruby 3.2.7** is used on this repo
 
 #### Rails
 
-**Rails 7.0.0** is used on this repo
+**Rails 7.2** is used on this repo
 
 ### Frontend
 
@@ -35,54 +39,154 @@ This is an experimental SPA using Vite Ruby(include Ruby on Rails 7) with Vue 3,
 
 **Pinia** and **Vue-router 4** are used on this repo
 
-### Clone the repo to your local machine
+## Setup the environment on Docker
 
-You can clone this repo by Github using command line prompt:
+### Prerequisites
 
-```git clone https://github.com/southparkstan123/rails-app-vue3.git```
+1. [Docker Desktop](https://docs.docker.com/get-started/get-docker/).
 
-After cloning the repo, install the dependencies for frontend and backend by following command:
+2. [Git client](https://git-scm.com/downloads).
 
-```yarn install``` and  ```bundle install```
+3. IDE or a text editor to edit files. Docker recommends using [Visual Studio Code](https://code.visualstudio.com/).
 
-### Environment variables
+### Initialization
 
-You can add the .env files to store the configuration value for different environments , the example file is in ```.env.template```, just copy this file for specific environment. 
+1. Clone this repo by Github using command line prompt:
 
-For example, in development, create ```.env.development.local```, then input the key and value on it.
+```bash
+git clone https://github.com/southparkstan123/book-store-vue3.git
+```
 
-In addition, you can add the test configurations for your local machine by copy ```.env.template```, then create and modify as ```.env.test.local```
+2. Environment variables
 
-### Database
+You can add the .env files to store the configuration value for different environments , the example file is in ```.env.template```, just copy this file for specific environment, for example ```.env.development.local``` file. 
 
-**Important**
-You have to ensure that MySQL and Redis driver is installed in your local machine.
+**Caution!!!**
 
-If you not require the username and password for your database, just comment out the username and password field on ```config/database.yml```
+**Avoid to commit the ```.env``` file which may contains the sensitive information such as API keys, credentials, etc.**
 
-You can create the database and migration by following command:
-```rails db:create && rails db:migrate```
 
-If you want to seeding of a database with data, Use ```rails db:seed```
+3. Run the following command to prepare the Docker image and start the PostgresSQL, Rails and Vite services:
 
-### Run the test cases
+```bash
+docker-compose up --build && docker-compose exec web bundle exec vite install && docker-compose exec web bundle exec yarn install
+```
 
-#### Backend
+or specify an env file for several environment such as ```.env.development.local```.
 
-TBC
+```bash
+# depends on .env.development.local
+docker compose --env-file ./.env.development.local up --build 
+```
 
-#### Frontend
+4. After create the images, migration the database by following command:
+```bash
+docker-compose exec web bundle exec rails db:migrate
+```
 
-TBC
+5. (Optional) Seeding of a database with data by following command:
+```bash
+docker-compose exec web bundle exec rails db:seed
+```
 
-### Fix Lint and Type errors
+6. Wait a moment and access ```http://localhost:3000``` on Web browser.
 
-TBC
+### Useful commands after establish the environment:
 
-## Start up the server
+### Start and End the container
 
-Run ```foreman start``` and access ```http://<YOUR_HOST_NAME_IN_ENV_FILE>:3000``` on Web browser.
+1. Run the following command to start the app:
+```bash
+# depends on .env by default
+docker compose up
+```
 
-**Remark: Edit your hosts file for your host name**
+or specify an env file for several environment such as ```.env.development.local```.
+
+```bash
+# depends on .env.development.local
+docker compose --env-file ./.env.development.local up
+```
+
+Start the app for only certain containers and without <b>```hot modules replacement (HMR)```</b> by following command:
+
+```bash
+docker compose up postgres web
+```
+
+2. Run the following command to restart the app:
+```bash
+docker compose restart
+```
+
+3. Run the following command to shutdown the app:
+```bash
+docker compose down
+```
+
+4. Run the following command to clean up old unused builds to keep my system clean:
+```bash
+docker system prune --all
+```
+
+5. Run the following command to install dependencies for frontend
+```bash
+docker-compose exec web bundle exec yarn install 
+```
+
+#### Rails
+
+1. Run the following command to access rails console:
+```bash
+docker-compose exec web bundle exec rails c
+```
+
+2. Migration the database by following command:
+```bash
+docker-compose exec web bundle exec rails db:migrate:<up or down> VERSION=<VERSION_WITH_DATETIME>
+```
+
+3. Rollback the migration the database by following command:
+```bash
+docker-compose exec web bundle exec rails db:rollback STEP=<ROLLBACK_TIMES> 
+```
+
+4. Seeding of a database with data by following command:
+```bash
+docker-compose exec web bundle exec rails db:seed
+```
+
+5. Run the following command to switch the application's database, such as PostgreSQL and MySQL, etc.:
+```bash
+docker-compose exec web bundle exec rails db:system:change --to=postgresql
+# Another value such as mysql, sqlite3, etc...
+```
+
+#### Troubleshooting for refuse connect to database
+
+**Caution: You will lose all corresponding data**
+
+1. Clear the volumes which were created using ```docker-compose down --volumes```.
+
+2. Run ```docker-compose up --build``` to rebuild the images for the project.
+
+#### Database
+
+1. Run the following command to verify the version of PostgreSQL:
+```bash
+docker exec my-postgres psql -V
+```
+
+2. Run the following command to show databases:
+```bash
+docker exec my-postgres psql -U postgres -c "\l"
+```
+
+**Remark** If you want to run the app on virtual macine such as Homestead, you must comment the key ```host``` on ```config/database.yml```:
+
+```yml
+# config/database.yml
+host: <%= ENV.fetch("DATABASE_HOST") { "postgres" } %>
+```
 
 Happy Coding!!!!!
