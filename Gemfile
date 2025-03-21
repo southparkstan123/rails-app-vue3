@@ -1,17 +1,17 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.0'
+ruby '3.2.7'
 
 # Use vite_rails and vite_ruby as the frontend tooling
 gem 'vite_rails'
 gem 'vite_ruby'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '7.0.0'
+gem 'rails', '~> 7.2'
 # Necessary for upgrage to Rail 7
 gem "sprockets-rails"
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.5'
+gem "pg", "~> 1.1"
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -36,6 +36,8 @@ gem 'rexml'
 gem 'dotenv-rails', groups: %i[development test]
 # Active model serializer
 gem 'active_model_serializers'
+# For pagination
+gem 'pagy', '~> 6.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
